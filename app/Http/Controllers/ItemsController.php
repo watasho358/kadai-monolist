@@ -1,22 +1,24 @@
+<?php
+namespace App\Http\Controllers;
+use Illuminate\Http\Request;
 use \App\Item;
-
-  class ItemsController extends Controller
-  {
-
+class ItemsController extends Controller
+{
     public function create()
     {
         $keyword = request()->keyword;
         $items = [];
         if ($keyword) {
+            //クライアント作成
             $client = new \RakutenRws_Client();
+            //アプリIDを設定
             $client->setApplicationId(env('RAKUTEN_APPLICATION_ID'));
-
+            //オプション付きで検索を実行
             $rws_response = $client->execute('IchibaItemSearch', [
                 'keyword' => $keyword,
                 'imageFlag' => 1,
                 'hits' => 20,
             ]);
-
             // 扱い易いように Item としてインスタンスを作成する（保存はしない）
             foreach ($rws_response->getData()['Items'] as $rws_item) {
                 $item = new Item();
@@ -27,10 +29,19 @@ use \App\Item;
                 $items[] = $item;
             }
         }
-
         return view('items.create', [
             'keyword' => $keyword,
             'items' => $items,
         ]);
     }
-  }
+    
+    public function show($id)
+    {
+      $item = Item::find($id);
+      $want_users = $item->want_users;
+      return view('items.show', [
+          'item' => $item,
+          'want_users' => $want_users,
+      ]);
+    }
+}

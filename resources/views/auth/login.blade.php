@@ -8,19 +8,19 @@
             <div class="panel-body">
                 {!! Form::open(['route' => 'login.post']) !!}
                     <div class="form-group">
-                        {!! Form::label('email', 'メールアドレス') !!}
-                        {!! Form::email('email', old('email'), ['class' => 'form-control']) !!}
+                        {!! form::label('email', 'メールアドレス') !!}
+                        {!! form::email('email', old('email'), ['class' => 'form-control']) !!}
                     </div>
 
                     <div class="form-group">
-                        {!! Form::label('password', 'パスワード') !!}
-                        {!! Form::password('password', ['class' => 'form-control']) !!}
+                        {!! form::label('password', 'パスワード') !!}
+                        {!! form::password('password', ['class' => 'form-control']) !!}
                     </div>
 
                     <div class="text-right">
-                        {!! Form::submit('ログイン', ['class' => 'btn btn-success']) !!}
+                        {!! form::submit('ログイン', ['class' => 'btn btn-success']) !!}
                     </div>
-                {!! Form::close() !!}
+                {!! form::close() !!}
             </div>
         </div>
     </div>
